@@ -205,3 +205,4 @@ checkoutBtn.addEventListener('click', () => {
 function refreshPrices() {
     fetchData();
 }
+
