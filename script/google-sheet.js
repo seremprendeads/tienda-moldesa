@@ -10,7 +10,7 @@ const productData = [
         price: 79.99,
         image: "img/productos-cards/mar-del-plata.jpg"
     },
-    // Other fallback products...
+    // Otros productos de respaldo...Puedes añadir más
 ];
 
 // Función para obtener una URL de imagen confiable de Google Drive
@@ -37,8 +37,17 @@ function extractGoogleDriveFileId(url) {
 
 // Function to fetch data from Google Sheets
 async function fetchData() {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const productsContainer = document.getElementById('products-container');
+    
+    if (!loadingOverlay || !productsContainer) {
+        console.error('Elements not found');
+        return { products: productData };
+    }
+    
     try {
         loadingOverlay.style.display = 'flex'; // Show loading overlay
+        
         const response = await fetch(SHEET_URL);
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -63,19 +72,28 @@ async function fetchData() {
             });
         }
         
-        renderProducts(data.products);
+        renderProducts(data.products || []);
         return data;
     } catch (error) {
         console.error('Error fetching data:', error);
         renderProducts(productData); // Load default data in case of error
         return { products: productData };
     } finally {
-        loadingOverlay.style.display = 'none'; // Hide loading overlay
+        // Asegurarse de que el overlay de carga se oculte, incluso en caso de error
+        if (loadingOverlay) {
+            loadingOverlay.style.display = 'none'; // Hide loading overlay
+        }
     }
 }
 
 // Function to render products
 function renderProducts(products) {
+    const productsContainer = document.getElementById('products-container');
+    if (!productsContainer) {
+        console.error('Products container not found');
+        return;
+    }
+    
     if (!products || products.length === 0) {
         console.error('No products to render');
         productsContainer.innerHTML = '<p class="text-center text-red-500">No se pudieron cargar los productos.</p>';
