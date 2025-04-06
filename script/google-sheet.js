@@ -1,5 +1,5 @@
 // Google Sheet Web App URL (replace with your published URL)
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyp5xU2vsbS7Y0wTh1F5hYWFQ2he6HllmIGE5XEFJFonzy0I8Bn2ghASraHjr8YZGqPbA/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyblauaG0XfONCFkZUq7aHH22Y_KQfBoQ02dPtXqhLL8LVALk4u1ZXvO1a_-MVsOsBZ2w/exec';
 
 // Product data (will now be loaded from Google Sheets)
 const productData = [
